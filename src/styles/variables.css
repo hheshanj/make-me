@@ -1,0 +1,40 @@
+:root {
+  /* Neo-Dark Palette */
+  --bg-app: #0f1115;
+  --bg-panel: #16191f;
+  --bg-surface: #1c202a;
+  
+  --text-primary: #e6e8eb;
+  --text-secondary: #9ca3af;
+  --text-muted: #6b7280;
+  
+  --accent-primary: #3b82f6;
+  --accent-secondary: #8b5cf6;
+  --accent-hover: #2563eb;
+  
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-highlight: rgba(255, 255, 255, 0.15);
+  
+  /* Glassmorphism */
+  --glass-bg: rgba(22, 25, 31, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.05);
+  --glass-blur: 12px;
+  
+  /* Typography */
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  
+  /* Spacing */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  
+  /* Transitions */
+  --transition-fast: 150ms ease;
+  --transition-normal: 250ms ease;
+  
+  /* Editor Defaults */
+  --editor-width: 850px;
+}

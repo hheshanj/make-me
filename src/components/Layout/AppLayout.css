@@ -1,0 +1,117 @@
+.app-layout {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 100vw;
+    background-color: var(--bg-app);
+    color: var(--text-primary);
+}
+
+/* Header */
+.app-header {
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1rem;
+    background-color: var(--bg-panel);
+    /* Fallback */
+    background-color: var(--glass-bg);
+    backdrop-filter: blur(var(--glass-blur));
+    border-bottom: 1px solid var(--border-subtle);
+    z-index: 50;
+}
+
+.header-left,
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.app-logo {
+    font-weight: 700;
+    font-size: 1.25rem;
+    background: linear-gradient(135deg, #fff 0%, #9ca3af 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-right: 1rem;
+    font-family: var(--font-mono);
+    letter-spacing: -0.5px;
+}
+
+.view-toggles {
+    display: flex;
+    background-color: rgba(255, 255, 255, 0.03);
+    padding: 2px;
+    border-radius: 6px;
+    border: 1px solid var(--border-subtle);
+}
+
+.divider-vertical {
+    width: 1px;
+    height: 20px;
+    background-color: var(--border-subtle);
+    margin: 0 0.5rem;
+}
+
+/* Body */
+.app-body {
+    flex: 1;
+    display: flex;
+    overflow: hidden;
+    position: relative;
+}
+
+/* Sidebars */
+.sidebar {
+    width: 260px;
+    background-color: var(--bg-panel);
+    border-right: 1px solid var(--border-subtle);
+    display: flex;
+    flex-direction: column;
+    transition: width var(--transition-normal), transform var(--transition-normal), opacity var(--transition-normal);
+    flex-shrink: 0;
+    z-index: 20;
+}
+
+.sidebar-right {
+    border-right: none;
+    border-left: 1px solid var(--border-subtle);
+}
+
+.sidebar.closed {
+    width: 0;
+    overflow: hidden;
+    opacity: 0;
+    border: none;
+}
+
+.sidebar-content {
+    padding: 1rem;
+    min-width: 260px;
+    /* Prevent content squish during transition */
+}
+
+.sidebar h3 {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-muted);
+    margin-bottom: 0.5rem;
+}
+
+.description {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+}
+
+/* Main Content */
+.main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+    background-color: var(--bg-app);
+}
