@@ -36,6 +36,23 @@ class AIService {
         }
     }
 
+    async listMyModels() {
+        if (!this.isConfigured) return;
+
+        try {
+            // This hits the /models endpoint and returns everything active
+            const result = await this.genAI.listModels();
+            
+            console.log("Yo bro, here are your available models:");
+            result.models.forEach((m) => {
+            console.log(`- ID: ${m.name.split('/')[1]}`); // e.g., "gemini-3-flash"
+            console.log(`  Methods: ${m.supportedGenerationMethods}`);
+            });
+            } catch (error) {
+            console.error("Couldn't fetch models, bro:", error);
+            }
+        }
+
     /**
      * Check if AI service is ready to use
      */
