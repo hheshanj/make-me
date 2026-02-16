@@ -25,7 +25,7 @@ class AIService {
 
         try {
             this.genAI = new GoogleGenerativeAI(apiKey);
-            this.model = this.genAI.getGenerativeModel({ model: 'gemini-1.5-flash-latest' });
+            this.model = this.genAI.getGenerativeModel({ model: 'gemini-3-flash' });
             this.isConfigured = true;
             console.log('AI Service: Configured successfully');
             return true;
