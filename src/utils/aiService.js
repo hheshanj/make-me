@@ -16,26 +16,41 @@ class AIService {
      * Initialize the AI service with API key
      * @param {string} apiKey - Google Gemini API key
      */
-    configure(apiKey) {
-        if (!apiKey) {
-            console.warn('AI Service: No API key provided');
-            this.isConfigured = false;
-            return false;
-        }
-
-        try {
-            this.genAI = new GoogleGenerativeAI(apiKey);
-            this.model = this.genAI.getGenerativeModel({ model: 'gemini-3-flash' });
-            this.isConfigured = true;
-            console.log('AI Service: Configured successfully');
-            return true;
-        } catch (error) {
-            console.error('AI Service: Configuration failed', error);
-            this.isConfigured = false;
-            return false;
-        }
+   async configure(apiKey) {
+    if (!apiKey) {
+        console.warn('AI Service: No API key provided');
+        this.isConfigured = false;
+        return false;
     }
 
+    try {
+        this.genAI = new GoogleGenerativeAI(apiKey);
+        
+        // 1. Get the list of all models you actually have access to
+        const modelList = await this.genAI.listModels();
+        
+        // 2. Find a "Flash" model that supports generating content
+        // We look for Gemini 3 first, then 2.5, then any Flash
+        const bestModel = modelList.models.find(m => 
+            m.supportedGenerationMethods.includes('generateContent') && 
+            (m.name.includes('gemini-3-flash') || m.name.includes('gemini-2.5-flash'))
+        ) || modelList.models.find(m => m.supportedGenerationMethods.includes('generateContent'));
+
+        if (bestModel) {
+            // bestModel.name usually looks like "models/gemini-3-flash"
+            this.model = this.genAI.getGenerativeModel({ model: bestModel.name });
+            this.isConfigured = true;
+            console.log(`AI Service: Connected to ${bestModel.name}`);
+            return true;
+        } else {
+            throw new Error("No compatible Gemini models found for this API key.");
+        }
+    } catch (error) {
+        console.error('AI Service: Configuration failed', error);
+        this.isConfigured = false;
+        return false;
+    }
+}
     async listMyModels() {
         if (!this.isConfigured) return;
 
