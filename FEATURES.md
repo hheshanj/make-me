@@ -131,20 +131,10 @@ Just start typing and use the shortcuts:
 
 ## ⏭️ Next Steps (Optional)
 
-### 6. 🤖 AI-Powered Actions (New!)
-**Status:** ✅ Complete
-
-Integrated Google Gemini AI for intelligent README generation:
-- **Generate from scratch**: Create full READMEs from a description
-- **Improve Text**: Rephrase and professionalize selected text
-- **Fix Grammar**: Auto-correct spelling and grammar
-- **Add Sections**: Generate Installation, Usage, etc.
-- **Custom Requests**: Ask AI anything about your document
-
-**How to use:**
-1. Click the ✨ button in the editor toolbar
-2. Enter your Google Gemini API key (saved locally)
-3. Choose a feature from the menu
+### 6. GitHub Integration
+- Direct push to repositories
+- PR description generator
+- Image hosting integration
 
 ---
 

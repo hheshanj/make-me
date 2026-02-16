@@ -130,5 +130,4 @@ npm run preview
 6. **Emoji picker**
 7. **Spell checker**
 8. **Export to PDF/HTML**
-9. **GitHub integration** (direct push to repo)
-10. **AI-powered suggestions**
+

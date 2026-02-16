@@ -119,34 +119,8 @@
     opacity: 0.9;
 }
 
-.ai-assistant-toggle {
-    background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
-    border: none;
-    color: white;
-    cursor: pointer;
-    padding: 0.5rem;
-    border-radius: 4px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.2s;
-    box-shadow: 0 2px 4px rgba(99, 102, 241, 0.3);
-}
-
-.ai-assistant-toggle:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 4px 6px rgba(99, 102, 241, 0.4);
-}
-
-.ai-assistant-toggle:active {
-    transform: translateY(0);
-}
-
-.tool-separator {
-    width: 1px;
-    height: 24px;
-    background-color: var(--border-subtle);
-    margin: 0 0.5rem;
+.spell-check-toggle.active:hover {
+    opacity: 0.9;
 }
 
 .markdown-textarea {

@@ -1,10 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { marked } from 'marked';
-import { CheckCheck, Sparkles } from 'lucide-react';
+import { CheckCheck } from 'lucide-react';
 import EmojiPicker from './EmojiPicker';
 import TableBuilder from './TableBuilder';
 import ImageUploader from './ImageUploader';
-import AIAssistant from './AIAssistant';
 import './EditorWrapper.css';
 
 /**
@@ -46,11 +45,6 @@ const EditorWrapper = ({ viewMode = 'editor', onMarkdownChange, initialContent }
 
     // Spell check toggle
     const [spellCheckEnabled, setSpellCheckEnabled] = useState(true);
-
-    // AI Assistant
-    const [isAIAssistantOpen, setIsAIAssistantOpen] = useState(false);
-    const [selectedText, setSelectedText] = useState('');
-    const [selectionRange, setSelectionRange] = useState({ start: 0, end: 0 });
 
     /**
      * Update rendered HTML whenever markdown content changes
@@ -238,44 +232,6 @@ const EditorWrapper = ({ viewMode = 'editor', onMarkdownChange, initialContent }
         insertAtCursor(markdown);
     };
 
-    /**
-     * Handle text selection and cursor updates
-     */
-    const updateSelection = (e) => {
-        const textarea = e.target;
-        setSelectionRange({
-            start: textarea.selectionStart,
-            end: textarea.selectionEnd
-        });
-        setSelectedText(markdownContent.substring(textarea.selectionStart, textarea.selectionEnd));
-    };
-
-    /**
-     * Handle AI content insertion
-     * Replaces selected text (using tracked range) or inserts at cursor
-     */
-    const handleAIInsert = (text) => {
-        const textarea = textareaRef.current;
-        if (!textarea) return;
-
-        // Use the tracked selection range since focus might have been lost to the modal
-        const { start, end } = selectionRange;
-        const beforeText = markdownContent.substring(0, start);
-        const afterText = markdownContent.substring(end);
-
-        // Replace the selection with the generated text
-        const newText = beforeText + text + afterText;
-        setMarkdownContent(newText);
-
-        // Update history manually since we modified state directly
-        setTimeout(() => {
-            textarea.focus();
-            // Set cursor at end of inserted text
-            const newCursorPos = start + text.length;
-            textarea.setSelectionRange(newCursorPos, newCursorPos);
-        }, 0);
-    };
-
     // Determine which panes to show based on view mode
     const showEditor = viewMode === 'editor' || viewMode === 'split';
     const showPreview = viewMode === 'preview' || viewMode === 'split';
@@ -290,14 +246,6 @@ const EditorWrapper = ({ viewMode = 'editor', onMarkdownChange, initialContent }
                             <div className="markdown-header">
                                 <span>✏️ Edit</span>
                                 <div className="editor-tools">
-                                    <button
-                                        className={`ai-assistant-toggle ${isAIAssistantOpen ? 'active' : ''}`}
-                                        onClick={() => setIsAIAssistantOpen(true)}
-                                        title="AI Assistant"
-                                    >
-                                        <Sparkles size={18} />
-                                    </button>
-                                    <div className="tool-separator" />
                                     <EmojiPicker onEmojiSelect={handleEmojiSelect} />
                                     <TableBuilder onTableInsert={handleTableInsert} />
                                     <ImageUploader onImageInsert={handleImageInsert} />
@@ -319,9 +267,6 @@ const EditorWrapper = ({ viewMode = 'editor', onMarkdownChange, initialContent }
                                 value={markdownContent}
                                 onChange={handleMarkdownChange}
                                 onKeyDown={handleKeyDown}
-                                onSelect={updateSelection}
-                                onClick={updateSelection}
-                                onKeyUp={updateSelection}
                                 placeholder="Type markdown here..."
                                 spellCheck={spellCheckEnabled}
                             />
@@ -345,15 +290,6 @@ const EditorWrapper = ({ viewMode = 'editor', onMarkdownChange, initialContent }
                     )}
                 </div>
             </div>
-
-            {/* AI Assistant Modal */}
-            <AIAssistant
-                isOpen={isAIAssistantOpen}
-                onClose={() => setIsAIAssistantOpen(false)}
-                onInsert={handleAIInsert}
-                currentContent={markdownContent}
-                selectedText={selectedText}
-            />
         </div>
     );
 };
