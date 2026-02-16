@@ -3,6 +3,7 @@
     outline: none;
     min-height: 100%;
     padding-bottom: 30vh;
+    font-family: var(--editor-font, var(--font-sans));
     /* Space to scroll past end */
 }
 

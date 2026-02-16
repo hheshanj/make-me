@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { PanelLeft, PanelRight, Layout, Moon, Sun, Download, Eye, FileCode, Copy } from 'lucide-react';
+import { PanelRight, Layout, Moon, Sun, Download, Eye, FileCode, Copy, Maximize2, Type } from 'lucide-react';
 import Button from '../UI/Button';
+import ColorPicker from '../UI/ColorPicker';
 import './AppLayout.css';
 
-const AppLayout = ({ children, onToggleView, viewMode, onExport, onCopy }) => {
-    const [leftOpen, setLeftOpen] = useState(true);
+const AppLayout = ({ children, onToggleView, viewMode, onExport, onCopy, lastSaved, focusMode, onToggleFullscreen, wordCount, charCount, onReset, theme, onToggleTheme, font, onFontChange, accentColor, onAccentColorChange }) => {
     const [rightOpen, setRightOpen] = useState(true);
 
     return (
@@ -12,14 +12,18 @@ const AppLayout = ({ children, onToggleView, viewMode, onExport, onCopy }) => {
             {/* Header */}
             <header className="app-header">
                 <div className="header-left">
-                    <div className="app-logo">MakeMe</div>
-                    <Button variant="ghost" size="icon" onClick={() => setLeftOpen(!leftOpen)}>
-                        <PanelLeft size={18} />
-                    </Button>
+                    <div className="app-logo-container">
+                        <img src="/src/assets/makeme.png" alt="MakeMe" className="app-logo-img" />
+                        <div className="app-logo">MakeMe</div>
+                    </div>
                 </div>
 
                 <div className="header-center">
-                    {/* Toolbar injected here or kept in Editor? Kept in editor for now */}
+                    {lastSaved && (
+                        <span className="saved-indicator">
+                            ✓ Saved {new Date(lastSaved).toLocaleTimeString()}
+                        </span>
+                    )}
                 </div>
 
                 <div className="header-right">
@@ -52,6 +56,17 @@ const AppLayout = ({ children, onToggleView, viewMode, onExport, onCopy }) => {
 
                     <div className="divider-vertical" />
 
+                    <Button
+                        variant="ghost"
+                        size="icon"
+                        onClick={onToggleTheme}
+                        title={`Switch to ${theme === 'dark' ? 'Light' : 'Dark'} Mode`}
+                    >
+                        {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
+                    </Button>
+                    <Button variant="ghost" size="icon" onClick={onToggleFullscreen} title="Toggle Fullscreen (F11)">
+                        <Maximize2 size={18} />
+                    </Button>
                     <Button variant="ghost" size="icon" onClick={() => setRightOpen(!rightOpen)}>
                         <PanelRight size={18} />
                     </Button>
@@ -66,30 +81,72 @@ const AppLayout = ({ children, onToggleView, viewMode, onExport, onCopy }) => {
 
             {/* Main Body */}
             <main className="app-body">
-                {/* Left Sidebar */}
-                <aside className={`sidebar sidebar-left ${leftOpen ? 'open' : 'closed'}`}>
-                    <div className="sidebar-content">
-                        <h3>Blocks</h3>
-                        <p className="description">Drag & drop components</p>
-                        {/* To be populated */}
-                    </div>
-                </aside>
-
                 {/* Center Content */}
                 <section className="main-content">
                     {children}
                 </section>
 
                 {/* Right Sidebar */}
-                <aside className={`sidebar sidebar-right ${rightOpen ? 'open' : 'closed'}`}>
+                <aside className={`sidebar sidebar-right ${rightOpen && !focusMode ? 'open' : 'closed'}`}>
                     <div className="sidebar-content">
-                        <h3>Properties</h3>
-                        <div className="properties-panel">
-                            <p className="description">Select an element to edit properties</p>
+                        <h3>Customization</h3>
+
+                        {/* Font Selection */}
+                        <div className="customization-section">
+                            <div className="section-label">
+                                <Type size={14} />
+                                <span>Font Family</span>
+                            </div>
+                            <div className="font-selector">
+                                <Button
+                                    variant={font === 'sans-serif' ? 'primary' : 'ghost'}
+                                    size="sm"
+                                    onClick={() => onFontChange('sans-serif')}
+                                >
+                                    Sans
+                                </Button>
+                                <Button
+                                    variant={font === 'serif' ? 'primary' : 'ghost'}
+                                    size="sm"
+                                    onClick={() => onFontChange('serif')}
+                                >
+                                    Serif
+                                </Button>
+                                <Button
+                                    variant={font === 'mono' ? 'primary' : 'ghost'}
+                                    size="sm"
+                                    onClick={() => onFontChange('mono')}
+                                >
+                                    Mono
+                                </Button>
+                            </div>
+                        </div>
+
+                        {/* Color Picker */}
+                        <div className="customization-section">
+                            <ColorPicker
+                                currentColor={accentColor}
+                                onChange={onAccentColorChange}
+                            />
                         </div>
                     </div>
                 </aside>
             </main>
+
+            {/* Footer with Stats */}
+            <footer className="app-footer">
+                <div className="footer-stats">
+                    <span className="footer-text">MakeMe - README Editor</span>
+                    {wordCount > 0 && (
+                        <>
+                            <span className="footer-divider">•</span>
+                            <span>{wordCount} words</span>
+                            <span className="footer-divider">•</span>
+                            <span>{charCount} characters</span>
+                        </>
+                    )}
+                </div>
+            </footer>
         </div>
     );
 };

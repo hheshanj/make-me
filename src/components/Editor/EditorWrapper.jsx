@@ -71,6 +71,10 @@ Start editing your README.md here. Use the toolbar above or markdown shortcuts.
 \`\`\`javascript
 console.log("Hello World");
 \`\`\`
+
+---
+
+Made with ❤️ by [Heshan Jayakody](https://github.com/hheshanj)
     `,
         autofocus: true,
         editorProps: {
