@@ -4,10 +4,12 @@ import EditorWrapper from './components/Editor/EditorWrapper';
 import Toast from './components/UI/Toast';
 import storage from './utils/storage';
 import './styles/light-theme.css';
+import './styles/loading.css';
 
 function App() {
   const [viewMode, setViewMode] = useState('editor'); // 'editor', 'split', 'markdown'
   const [markdownContent, setMarkdownContent] = useState('');
+  const [isLoaded, setIsLoaded] = useState(false);
   const [toastVisible, setToastVisible] = useState(false);
   const [toastMessage, setToastMessage] = useState('');
   const [lastSaved, setLastSaved] = useState(null);
@@ -30,10 +32,13 @@ function App() {
     setTheme(storage.loadTheme());
     setFont(storage.loadFont());
     setAccentColor(storage.loadAccentColor());
+
+    setIsLoaded(true);
   }, []);
 
   // Auto-save with debouncing (2 seconds after last change)
   useEffect(() => {
+    if (!isLoaded) return; // Don't save before initial load
     if (!markdownContent) return; // Don't save empty content on initial load
 
     const timer = setTimeout(() => {
@@ -44,7 +49,7 @@ function App() {
     }, 2000);
 
     return () => clearTimeout(timer);
-  }, [markdownContent]);
+  }, [markdownContent, isLoaded]);
 
   // Calculate word and character count
   useEffect(() => {
@@ -119,6 +124,10 @@ function App() {
       showToast('Canvas cleared!');
     }
   };
+
+  if (!isLoaded) {
+    return <div className="app-loading">Loading...</div>;
+  }
 
   return (
     <div className="app">

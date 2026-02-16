@@ -1,68 +1,119 @@
 import React, { useState, useEffect } from 'react';
-import { useEditor, EditorContent } from '@tiptap/react';
-import StarterKit from '@tiptap/starter-kit';
-import TaskList from '@tiptap/extension-task-list';
-import TaskItem from '@tiptap/extension-task-item';
-import { Markdown } from 'tiptap-markdown';
-import Image from '@tiptap/extension-image';
-import Link from '@tiptap/extension-link';
-import { Table } from '@tiptap/extension-table';
-import { TableCell } from '@tiptap/extension-table-cell';
-import { TableHeader } from '@tiptap/extension-table-header';
-import { TableRow } from '@tiptap/extension-table-row';
-// import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight';
-// import { common, createLowlight } from 'lowlight';
-import Toolbar from './Toolbar';
+import { marked } from 'marked';
 import './EditorWrapper.css';
 
-// Initialize lowlight with common languages (lighter bundle)
-// const lowlight = createLowlight(common);
+/**
+ * EditorWrapper Component
+ * 
+ * A GitHub-style markdown editor with three view modes:
+ * - Edit: Raw markdown editing
+ * - Preview: Rendered HTML preview
+ * - Split: Side-by-side edit and preview
+ * 
+ * Features:
+ * - Full HTML support (preserves all attributes)
+ * - GitHub Flavored Markdown (GFM)
+ * - Real-time preview rendering
+ * - Auto-save integration via onMarkdownChange callback
+ */
 
-const EditorWrapper = ({ viewMode = 'editor', onMarkdownChange }) => {
-    const [markdownContent, setMarkdownContent] = useState('');
+// Configure marked to match GitHub's markdown rendering
+marked.setOptions({
+    breaks: true,          // Convert \n to <br>
+    gfm: true,            // GitHub Flavored Markdown
+    headerIds: true,      // Add IDs to headings
+    mangle: false,        // Don't escape email addresses
+    sanitize: false,      // Allow HTML tags (needed for README customization)
+});
 
-    const updateMarkdown = (md) => {
-        setMarkdownContent(md);
-        if (onMarkdownChange) {
-            onMarkdownChange(md);
+const EditorWrapper = ({ viewMode = 'editor', onMarkdownChange, initialContent }) => {
+    // State management
+    const [markdownContent, setMarkdownContent] = useState(initialContent || getDefaultContent());
+    const [renderedHTML, setRenderedHTML] = useState('');
+
+    /**
+     * Update rendered HTML whenever markdown content changes
+     * Uses marked.js to parse markdown to HTML
+     */
+    useEffect(() => {
+        try {
+            const html = marked.parse(markdownContent);
+            setRenderedHTML(html);
+        } catch (error) {
+            console.error('Markdown parsing error:', error);
+            setRenderedHTML('<p style="color: red;">Error rendering markdown</p>');
         }
+    }, [markdownContent]);
+
+    /**
+     * Notify parent component of content changes
+     * This enables auto-save and other integrations
+     */
+    useEffect(() => {
+        if (onMarkdownChange) {
+            onMarkdownChange(markdownContent);
+        }
+    }, [markdownContent, onMarkdownChange]);
+
+    /**
+     * Handle textarea input changes
+     */
+    const handleMarkdownChange = (e) => {
+        setMarkdownContent(e.target.value);
     };
 
-    const editor = useEditor({
-        extensions: [
-            StarterKit.configure({
-                heading: {
-                    levels: [1, 2, 3],
-                },
-                codeBlock: true, // Enable default codeBlock
-            }),
-            TaskList,
-            TaskItem.configure({
-                nested: true,
-            }),
-            Markdown.configure({
-                transformPastedText: true,
-                transformCopiedText: true,
-            }),
-            Image,
-            Link.configure({
-                openOnClick: false,
-                autolink: true,
-            }),
-            Table.configure({
-                resizable: true,
-            }),
-            TableRow,
-            TableHeader,
-            TableCell,
-            // CodeBlockLowlight.configure({
-            //   lowlight,
-            // }),
-        ],
-        content: `
-# Welcome to MakeMe
+    // Determine which panes to show based on view mode
+    const showEditor = viewMode === 'editor' || viewMode === 'split';
+    const showPreview = viewMode === 'preview' || viewMode === 'split';
 
-Start editing your README.md here. Use the toolbar above or markdown shortcuts.
+    return (
+        <div className="editor-layout">
+            <div className="editor-main">
+                <div className="editor-workspace">
+                    {/* Raw Markdown Editor Pane */}
+                    {showEditor && (
+                        <div className={`editor-pane ${viewMode === 'split' ? 'split' : ''}`}>
+                            <div className="markdown-header">
+                                <span>✏️ Edit</span>
+                            </div>
+                            <textarea
+                                className="markdown-textarea"
+                                value={markdownContent}
+                                onChange={handleMarkdownChange}
+                                placeholder="Type markdown here..."
+                                spellCheck="false"
+                            />
+                        </div>
+                    )}
+
+                    {/* Split View Divider */}
+                    {viewMode === 'split' && <div className="split-divider" />}
+
+                    {/* HTML Preview Pane */}
+                    {showPreview && (
+                        <div className={`preview-pane ${viewMode === 'split' ? 'split' : ''}`}>
+                            <div className="markdown-header">
+                                <span>👁️ Preview</span>
+                            </div>
+                            <div
+                                className="markdown-preview"
+                                dangerouslySetInnerHTML={{ __html: renderedHTML }}
+                            />
+                        </div>
+                    )}
+                </div>
+            </div>
+        </div>
+    );
+};
+
+/**
+ * Default markdown content shown on first load
+ */
+function getDefaultContent() {
+    return `# Welcome to MakeMe
+
+Start editing your README.md here.
 
 - [x] Initialize Project
 - [ ] Build Amazing Features
@@ -75,62 +126,7 @@ console.log("Hello World");
 ---
 
 Made with ❤️ by [Heshan Jayakody](https://github.com/hheshanj)
-    `,
-        autofocus: true,
-        editorProps: {
-            attributes: {
-                class: 'prose-mirror-editor', // Target for CSS
-            },
-        },
-        onUpdate: ({ editor }) => {
-            const md = editor.storage.markdown.getMarkdown();
-            updateMarkdown(md);
-        },
-        onCreate: ({ editor }) => {
-            const md = editor.storage.markdown.getMarkdown();
-            updateMarkdown(md);
-        }
-    });
-
-    const isSplit = viewMode === 'split';
-    const showEditor = viewMode === 'editor' || isSplit;
-    const showMarkdown = viewMode === 'markdown' || isSplit;
-
-    return (
-        <div className="editor-layout">
-            <div className="editor-main">
-                {showEditor && editor && <Toolbar editor={editor} />}
-
-                <div className="editor-workspace">
-                    {/* WYSIWYG Editor */}
-                    <div
-                        className={`editor-pane ${showEditor ? 'visible' : 'hidden'} ${isSplit ? 'split' : ''}`}
-                    >
-                        <div className="editor-canvas-container">
-                            <EditorContent editor={editor} className="editor-content" />
-                        </div>
-                    </div>
-
-                    {/* Split Divider */}
-                    {isSplit && <div className="split-divider" />}
-
-                    {/* Raw Markdown View */}
-                    <div
-                        className={`markdown-pane ${showMarkdown ? 'visible' : 'hidden'} ${isSplit ? 'split' : ''}`}
-                    >
-                        <div className="markdown-header">
-                            <span>Raw Markdown</span>
-                        </div>
-                        <textarea
-                            className="markdown-textarea"
-                            value={markdownContent}
-                            readOnly
-                        />
-                    </div>
-                </div>
-            </div>
-        </div>
-    );
-};
+`;
+}
 
 export default EditorWrapper;

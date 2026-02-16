@@ -34,7 +34,7 @@ const AppLayout = ({ children, onToggleView, viewMode, onExport, onCopy, lastSav
                             onClick={() => onToggleView('editor')}
                             title="Editor View"
                         >
-                            <Eye size={16} /> Editor
+                            <Eye size={20} /> Edit
                         </Button>
                         <Button
                             variant={viewMode === 'split' ? 'primary' : 'ghost'}
@@ -42,15 +42,15 @@ const AppLayout = ({ children, onToggleView, viewMode, onExport, onCopy, lastSav
                             onClick={() => onToggleView('split')}
                             title="Split View"
                         >
-                            <Layout size={16} /> Split
+                            <Layout size={20} /> Split
                         </Button>
                         <Button
-                            variant={viewMode === 'markdown' ? 'primary' : 'ghost'}
+                            variant={viewMode === 'preview' ? 'primary' : 'ghost'}
                             size="sm"
-                            onClick={() => onToggleView('markdown')}
-                            title="Raw Markdown"
+                            onClick={() => onToggleView('preview')}
+                            title="Preview"
                         >
-                            <FileCode size={16} /> Code
+                            <FileCode size={20} /> Preview
                         </Button>
                     </div>
 
@@ -62,19 +62,19 @@ const AppLayout = ({ children, onToggleView, viewMode, onExport, onCopy, lastSav
                         onClick={onToggleTheme}
                         title={`Switch to ${theme === 'dark' ? 'Light' : 'Dark'} Mode`}
                     >
-                        {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
+                        {theme === 'dark' ? <Sun size={22} /> : <Moon size={22} />}
                     </Button>
                     <Button variant="ghost" size="icon" onClick={onToggleFullscreen} title="Toggle Fullscreen (F11)">
-                        <Maximize2 size={18} />
+                        <Maximize2 size={22} />
                     </Button>
                     <Button variant="ghost" size="icon" onClick={() => setRightOpen(!rightOpen)}>
-                        <PanelRight size={18} />
+                        <PanelRight size={22} />
                     </Button>
                     <Button variant="ghost" size="sm" onClick={onCopy} title="Copy to Clipboard">
-                        <Copy size={16} />
+                        <Copy size={20} />
                     </Button>
                     <Button variant="primary" size="sm" onClick={onExport}>
-                        <Download size={16} /> Export
+                        <Download size={20} /> Export
                     </Button>
                 </div>
             </header>
@@ -136,7 +136,7 @@ const AppLayout = ({ children, onToggleView, viewMode, onExport, onCopy, lastSav
             {/* Footer with Stats */}
             <footer className="app-footer">
                 <div className="footer-stats">
-                    <span className="footer-text">MakeMe - README Editor</span>
+                    <span className="footer-text">MakeMe - MARKDOWN Editor</span>
                     {wordCount > 0 && (
                         <>
                             <span className="footer-divider">•</span>
