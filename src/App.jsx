@@ -65,13 +65,14 @@ function App() {
     storage.saveTheme(theme);
   }, [theme]);
 
-  // Apply font to editor
+  // Apply font to editor and preview
   useEffect(() => {
-    document.documentElement.style.setProperty('--editor-font',
-      font === 'serif' ? 'Georgia, serif' :
-        font === 'mono' ? 'var(--font-mono)' :
-          'var(--font-sans)'
-    );
+    const fontStack =
+      font === 'serif' ? 'Georgia, "Times New Roman", serif' :
+        font === 'mono' ? '"JetBrains Mono", "Fira Code", monospace' :
+          '"Inter", system-ui, -apple-system, sans-serif';
+
+    document.documentElement.style.setProperty('--editor-font', fontStack);
     storage.saveFont(font);
   }, [font]);
 
