@@ -43,15 +43,16 @@
 .app-logo-container {
     display: flex;
     align-items: center;
-    gap: -1rem;
+    gap: 0.5rem;
     margin-right: 1rem;
+    text-decoration: none;
 }
 
 .app-logo-img {
-    height: 60px;
-    width: auto;
-    margin-right: -7px;
+    height: 36px;
+    width: 36px;
     object-fit: contain;
+    border-radius: 6px;
 }
 
 
