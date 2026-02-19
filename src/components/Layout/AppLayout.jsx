@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { PanelRight, Layout, Moon, Sun, Download, Eye, FileCode, Copy, Maximize2, Type } from 'lucide-react';
 import Button from '../UI/Button';
 import ColorPicker from '../UI/ColorPicker';
+import makeMeLogo from '../../assets/makeme.png';
 import './AppLayout.css';
 
 const AppLayout = ({ children, onToggleView, viewMode, onExport, onCopy, lastSaved, focusMode, onToggleFullscreen, wordCount, charCount, readingTime, onReset, theme, onToggleTheme, font, onFontChange, accentColor, onAccentColorChange }) => {
@@ -13,7 +14,7 @@ const AppLayout = ({ children, onToggleView, viewMode, onExport, onCopy, lastSav
             <header className="app-header">
                 <div className="header-left">
                     <div className="app-logo-container">
-                        <img src="/src/assets/makeme.png" alt="MakeMe" className="app-logo-img" />
+                        <img src={makeMeLogo} alt="MakeMe" className="app-logo-img" />
                         <div className="app-logo">MakeMe</div>
                     </div>
                 </div>
