@@ -4,7 +4,7 @@ import Button from '../UI/Button';
 import ColorPicker from '../UI/ColorPicker';
 import './AppLayout.css';
 
-const AppLayout = ({ children, onToggleView, viewMode, onExport, onCopy, lastSaved, focusMode, onToggleFullscreen, wordCount, charCount, onReset, theme, onToggleTheme, font, onFontChange, accentColor, onAccentColorChange }) => {
+const AppLayout = ({ children, onToggleView, viewMode, onExport, onCopy, lastSaved, focusMode, onToggleFullscreen, wordCount, charCount, readingTime, onReset, theme, onToggleTheme, font, onFontChange, accentColor, onAccentColorChange }) => {
     const [rightOpen, setRightOpen] = useState(true);
 
     return (
@@ -129,6 +129,18 @@ const AppLayout = ({ children, onToggleView, viewMode, onExport, onCopy, lastSav
                                 onChange={onAccentColorChange}
                             />
                         </div>
+
+                        {/* Danger Zone */}
+                        <div className="customization-section">
+                            <Button
+                                variant="danger"
+                                size="sm"
+                                onClick={onReset}
+                                style={{ width: '100%' }}
+                            >
+                                Clear All Content
+                            </Button>
+                        </div>
                     </div>
                 </aside>
             </main>
@@ -143,6 +155,8 @@ const AppLayout = ({ children, onToggleView, viewMode, onExport, onCopy, lastSav
                             <span>{wordCount} words</span>
                             <span className="footer-divider">•</span>
                             <span>{charCount} characters</span>
+                            <span className="footer-divider">•</span>
+                            <span>~{readingTime} min read</span>
                         </>
                     )}
                 </div>

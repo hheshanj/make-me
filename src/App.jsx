@@ -16,6 +16,7 @@ function App() {
   const [focusMode, setFocusMode] = useState(false);
   const [wordCount, setWordCount] = useState(0);
   const [charCount, setCharCount] = useState(0);
+  const [readingTime, setReadingTime] = useState(0);
   const [theme, setTheme] = useState('dark');
   const [font, setFont] = useState('sans-serif');
   const [accentColor, setAccentColor] = useState('#3b82f6');
@@ -57,6 +58,7 @@ function App() {
     const chars = markdownContent.length;
     setWordCount(words);
     setCharCount(chars);
+    setReadingTime(Math.max(1, Math.ceil(words / 200)));
   }, [markdownContent]);
 
   // Apply theme to document root
@@ -142,6 +144,7 @@ function App() {
         onToggleFullscreen={handleToggleFullscreen}
         wordCount={wordCount}
         charCount={charCount}
+        readingTime={readingTime}
         onReset={handleReset}
         theme={theme}
         onToggleTheme={() => setTheme(theme === 'dark' ? 'light' : 'dark')}

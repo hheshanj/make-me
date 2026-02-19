@@ -31,6 +31,18 @@ const ColorPicker = ({ currentColor, onChange }) => {
                     />
                 ))}
             </div>
+            <div className="color-custom-row">
+                <label className="color-custom-label" htmlFor="custom-color-input">Custom</label>
+                <input
+                    id="custom-color-input"
+                    type="color"
+                    className="color-custom-input"
+                    value={currentColor}
+                    onChange={e => onChange(e.target.value)}
+                    title="Pick a custom colour"
+                />
+                <span className="color-custom-hex">{currentColor}</span>
+            </div>
         </div>
     );
 };

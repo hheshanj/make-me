@@ -1,22 +1,27 @@
-/* Light Theme Overrides */
+/* ======================================
+   LIGHT THEME OVERRIDES
+   Applied when [data-theme="light"] is set
+   ====================================== */
+
 :root[data-theme="light"] {
     /* Backgrounds */
-    --bg-app: #f5f5f7;
-    --bg-panel: rgba(255, 255, 255, 0.8);
+    --bg-app: #f0f2f5;
+    --bg-panel: rgba(255, 255, 255, 0.95);
+    --bg-surface: #e8eaed;
     --bg-editor: #ffffff;
 
     /* Text */
-    --text-primary: #1d1d1f;
-    --text-secondary: #424245;
-    --text-muted: #6e6e73;
+    --text-primary: #1a1a2e;
+    --text-secondary: #374151;
+    --text-muted: #6b7280;
 
     /* Borders */
     --border-subtle: rgba(0, 0, 0, 0.1);
     --border-strong: rgba(0, 0, 0, 0.2);
 
     /* Glass effect */
-    --glass-bg: rgba(255, 255, 255, 0.7);
-    --glass-border: rgba(0, 0, 0, 0.1);
+    --glass-bg: rgba(255, 255, 255, 0.85);
+    --glass-border: rgba(0, 0, 0, 0.08);
 
     /* Shadows */
     --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
@@ -24,32 +29,294 @@
     --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.15);
 }
 
-/* Light theme specific adjustments */
+/* ── App Logo ── */
 :root[data-theme="light"] .app-logo {
-    background: linear-gradient(135deg, #1d1d1f 0%, #6e6e73 100%);
+    background: linear-gradient(135deg, #1a1a2e 0%, #4b5563 100%);
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
+/* ── Header ── */
+:root[data-theme="light"] .app-header {
+    background-color: rgba(255, 255, 255, 0.92);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+}
+
+/* ── Saved Indicator ── */
 :root[data-theme="light"] .saved-indicator {
     background-color: rgba(34, 197, 94, 0.15);
     border: 1px solid rgba(34, 197, 94, 0.3);
     color: #15803d;
 }
 
+/* ── View Toggles ── */
 :root[data-theme="light"] .view-toggles {
     background-color: rgba(0, 0, 0, 0.05);
+    border-color: rgba(0, 0, 0, 0.1);
 }
 
+/* ── Ghost Buttons – better contrast in light mode ── */
+:root[data-theme="light"] .variant-ghost {
+    color: #374151;
+}
+
+:root[data-theme="light"] .variant-ghost:hover {
+    background-color: rgba(0, 0, 0, 0.06);
+    color: #111827;
+}
+
+/* ── Sidebar ── */
 :root[data-theme="light"] .sidebar {
-    background-color: rgba(255, 255, 255, 0.9);
+    background-color: rgba(255, 255, 255, 0.95);
+    border-left: 1px solid rgba(0, 0, 0, 0.08);
+    box-shadow: -2px 0 8px rgba(0, 0, 0, 0.05);
 }
 
+/* ── Editor Pane ── */
+:root[data-theme="light"] .editor-pane {
+    background-color: #ffffff;
+}
+
+:root[data-theme="light"] .markdown-textarea {
+    background-color: #ffffff;
+    color: #1a1a2e;
+}
+
+/* ── Markdown Header (pane label bar) ── */
+:root[data-theme="light"] .markdown-header {
+    background-color: rgba(0, 0, 0, 0.03);
+    border-bottom-color: rgba(0, 0, 0, 0.08);
+    color: #6b7280;
+}
+
+/* ── Formatting Toolbar ── */
+:root[data-theme="light"] .format-toolbar {
+    background-color: rgba(0, 0, 0, 0.03);
+    border-bottom-color: rgba(0, 0, 0, 0.08);
+}
+
+:root[data-theme="light"] .toolbar-btn {
+    color: #4b5563;
+}
+
+:root[data-theme="light"] .toolbar-btn:hover:not(:disabled) {
+    background-color: rgba(0, 0, 0, 0.07);
+    color: #111827;
+}
+
+:root[data-theme="light"] .toolbar-btn:disabled {
+    color: #9ca3af;
+}
+
+:root[data-theme="light"] .toolbar-divider {
+    background-color: rgba(0, 0, 0, 0.12);
+}
+
+:root[data-theme="light"] .keyboard-hints {
+    color: #9ca3af;
+}
+
+/* ── Spell-check / Search toggle buttons ── */
+:root[data-theme="light"] .spell-check-toggle {
+    color: #6b7280;
+}
+
+:root[data-theme="light"] .spell-check-toggle:hover {
+    background-color: rgba(0, 0, 0, 0.06);
+    color: #111827;
+}
+
+/* ── Find & Replace Panel ── */
+:root[data-theme="light"] .find-replace-panel {
+    background-color: rgba(0, 0, 0, 0.04);
+    border-bottom-color: rgba(0, 0, 0, 0.08);
+}
+
+:root[data-theme="light"] .find-replace-input {
+    background-color: #ffffff;
+    border-color: rgba(0, 0, 0, 0.2);
+    color: #1a1a2e;
+}
+
+:root[data-theme="light"] .find-replace-input::placeholder {
+    color: #9ca3af;
+}
+
+:root[data-theme="light"] .find-replace-input:focus {
+    border-color: var(--accent-primary);
+}
+
+:root[data-theme="light"] .find-replace-count {
+    color: #6b7280;
+}
+
+:root[data-theme="light"] .find-replace-close {
+    color: #6b7280;
+}
+
+:root[data-theme="light"] .find-replace-close:hover {
+    background-color: rgba(0, 0, 0, 0.06);
+    color: #111827;
+}
+
+/* ── Preview Pane ── */
+:root[data-theme="light"] .preview-pane {
+    background-color: #ffffff;
+    border-left-color: rgba(0, 0, 0, 0.08);
+}
+
+:root[data-theme="light"] .markdown-preview {
+    color: #1a1a2e;
+}
+
+:root[data-theme="light"] .markdown-preview code {
+    background-color: rgba(0, 0, 0, 0.06);
+    color: #1d4ed8;
+}
+
+:root[data-theme="light"] .markdown-preview pre {
+    background-color: #f3f4f6;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+:root[data-theme="light"] .markdown-preview pre code {
+    background-color: transparent;
+    color: #1a1a2e;
+}
+
+:root[data-theme="light"] .markdown-preview blockquote {
+    border-left-color: rgba(0, 0, 0, 0.2);
+    color: #4b5563;
+}
+
+:root[data-theme="light"] .markdown-preview th {
+    background-color: #f3f4f6;
+}
+
+/* ── Footer ── */
+:root[data-theme="light"] .app-footer {
+    background-color: rgba(255, 255, 255, 0.9);
+    border-top-color: rgba(0, 0, 0, 0.08);
+    color: #6b7280;
+}
+
+/* ── Emoji Picker ── */
+:root[data-theme="light"] .emoji-picker-popup {
+    background-color: #ffffff;
+    border-color: rgba(0, 0, 0, 0.12);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+:root[data-theme="light"] .emoji-picker-header {
+    color: #1a1a2e;
+    border-bottom-color: rgba(0, 0, 0, 0.08);
+}
+
+:root[data-theme="light"] .emoji-category-btn {
+    color: #4b5563;
+}
+
+:root[data-theme="light"] .emoji-category-btn:hover {
+    background-color: rgba(0, 0, 0, 0.06);
+    color: #111827;
+}
+
+:root[data-theme="light"] .emoji-btn:hover {
+    background-color: rgba(0, 0, 0, 0.06);
+}
+
+/* ── Table Builder ── */
+:root[data-theme="light"] .table-builder-popup {
+    background-color: #ffffff;
+    border-color: rgba(0, 0, 0, 0.12);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+:root[data-theme="light"] .table-builder-header {
+    color: #1a1a2e;
+    border-bottom-color: rgba(0, 0, 0, 0.08);
+}
+
+:root[data-theme="light"] .table-builder-control label {
+    color: #374151;
+}
+
+:root[data-theme="light"] .table-builder-control input {
+    background-color: #f3f4f6;
+    border-color: rgba(0, 0, 0, 0.2);
+    color: #1a1a2e;
+}
+
+:root[data-theme="light"] .table-preview-cell {
+    background-color: #e8eaed;
+}
+
+/* ── Image Uploader ── */
+:root[data-theme="light"] .image-uploader-popup {
+    background-color: #ffffff;
+    border-color: rgba(0, 0, 0, 0.12);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+:root[data-theme="light"] .image-uploader-header {
+    color: #1a1a2e;
+    border-bottom-color: rgba(0, 0, 0, 0.08);
+}
+
+:root[data-theme="light"] .image-url-input input {
+    background-color: #f3f4f6;
+    border-color: rgba(0, 0, 0, 0.2);
+    color: #1a1a2e;
+}
+
+:root[data-theme="light"] .image-url-input input::placeholder {
+    color: #9ca3af;
+}
+
+:root[data-theme="light"] .image-drop-zone {
+    border-color: rgba(0, 0, 0, 0.15);
+}
+
+:root[data-theme="light"] .image-drop-zone p,
+:root[data-theme="light"] .image-drop-hint {
+    color: #6b7280;
+}
+
+:root[data-theme="light"] .image-uploader-divider span {
+    background-color: #ffffff;
+    color: #9ca3af;
+}
+
+:root[data-theme="light"] .image-uploader-close {
+    color: #6b7280;
+}
+
+:root[data-theme="light"] .image-uploader-close:hover {
+    background-color: rgba(0, 0, 0, 0.06);
+    color: #111827;
+}
+
+/* ── Modals (Template Selector) ── */
 :root[data-theme="light"] .template-card {
     background-color: rgba(0, 0, 0, 0.03);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    color: #1a1a2e;
 }
 
 :root[data-theme="light"] .template-card:hover {
-    background-color: rgba(59, 130, 246, 0.1);
+    background-color: rgba(59, 130, 246, 0.08);
+    border-color: rgba(59, 130, 246, 0.3);
+}
+
+/* ── Color Picker ── */
+:root[data-theme="light"] .color-picker {
+    background-color: rgba(0, 0, 0, 0.03);
+    border-color: rgba(0, 0, 0, 0.1);
+}
+
+/* ── Split divider ── */
+:root[data-theme="light"] .split-divider {
+    background-color: rgba(0, 0, 0, 0.1);
 }
