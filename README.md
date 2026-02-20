@@ -1,16 +1,45 @@
-# React + Vite
+# MakeMe - README Editor
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+MakeMe is a feature-rich, real-time Markdown editor designed specifically for creating stunning README files. It provides a split-pane interface with a live preview, making it easier than ever to write, format, and visualize your project documentation.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Split-Pane & Multiple Views**: Toggle between editor-only, preview-only, or split views to suit your workflow.
+- **Real-Time Preview**: See your Markdown rendered instantly as you type.
+- **AI Assistant Integration**: Get intelligent suggestions and help with crafting your documentation directly within the editor.
+- **Rich Formatting Toolbar**: Easily apply Markdown formatting (bold, italic, links, lists, code blocks, etc.) with a comprehensive toolbar.
+- **Theming & Customization**: Features both Light and Dark modes. Customize the editor further with a custom accent color picker and multiple font choices.
+- **Productivity Tools**:
+  - Focus mode for distraction-free writing.
+  - Word count, character count, and reading time estimation.
+  - Find-and-replace panel and undo/redo functionality.
+- **Auto-Save**: Never lose your work with built-in, debounced auto-saving to local storage.
+- **Export & Copy**: Effortlessly download your finished `README.md` or copy the raw Markdown to your clipboard with a single click.
 
-## React Compiler
+## Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+This project is built using modern web technologies:
 
-## Expanding the ESLint configuration
+- **React 19**
+- **Vite** for fast, optimized builds
+- **Framer Motion** for smooth UI animations
+- **marked** for robust Markdown parsing
+- **Lucide React** for beautiful, consistent iconography
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Getting Started
+
+To run the project locally:
+
+1. Clone the repository.
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Start the development server:
+   ```bash
+   npm run dev
+   ```
+
+## License
+
+This project is private and intended for internal use.
