@@ -9,6 +9,9 @@ import EmojiPicker from './EmojiPicker';
 import TableBuilder from './TableBuilder';
 import ImageUploader from './ImageUploader';
 import './EditorWrapper.css';
+import AIAssistant from './AIAssistant';
+import { Sparkles } from 'lucide-react';
+
 
 /**
  * EditorWrapper Component
@@ -54,6 +57,11 @@ const EditorWrapper = ({ viewMode = 'editor', onMarkdownChange, initialContent }
     const [findText, setFindText] = useState('');
     const [replaceText, setReplaceText] = useState('');
     const findInputRef = useRef(null);
+
+    // AI Assistant
+    const [aiOpen, setAiOpen] = useState(false);
+    const [selectedText, setSelectedText] = useState('');
+
 
     // Render markdown whenever content changes
     useEffect(() => {
@@ -128,6 +136,36 @@ const EditorWrapper = ({ viewMode = 'editor', onMarkdownChange, initialContent }
 
     const handleMarkdownChange = (e) => {
         setMarkdownContent(e.target.value);
+    };
+
+    const handleSelect = (e) => {
+        const start = e.target.selectionStart;
+        const end = e.target.selectionEnd;
+        setSelectedText(markdownContent.substring(start, end));
+    };
+
+    /**
+     * Replace currently selected text with new text (or insert at cursor)
+     */
+    const replaceSelection = (text) => {
+        const textarea = textareaRef.current;
+        if (!textarea) return;
+
+        const start = textarea.selectionStart;
+        const end = textarea.selectionEnd;
+        const beforeText = markdownContent.substring(0, start);
+        const afterText = markdownContent.substring(end);
+
+        const newText = beforeText + text + afterText;
+        setMarkdownContent(newText);
+
+        setTimeout(() => {
+            textarea.focus();
+            const newPos = start + text.length;
+            textarea.setSelectionRange(newPos, newPos);
+            // Update selection state to empty execution
+            setSelectedText('');
+        }, 0);
     };
 
     /**
@@ -234,10 +272,17 @@ const EditorWrapper = ({ viewMode = 'editor', onMarkdownChange, initialContent }
                     {/* Raw Markdown Editor Pane */}
                     {showEditor && (
                         <div className={`editor-pane ${viewMode === 'split' ? 'split' : ''}`}>
-                            {/* Top header row: label + misc tools */}
                             <div className="markdown-header">
                                 <span>✏️ Edit</span>
                                 <div className="editor-tools">
+                                    <button
+                                        className={`spell-check-toggle ${aiOpen ? 'active' : ''}`}
+                                        onClick={() => setAiOpen(!aiOpen)}
+                                        title="AI Assistant"
+                                        style={{ color: aiOpen ? '#eab308' : 'inherit' }}
+                                    >
+                                        <Sparkles size={18} />
+                                    </button>
                                     <EmojiPicker onEmojiSelect={handleEmojiSelect} />
                                     <TableBuilder onTableInsert={handleTableInsert} />
                                     <ImageUploader onImageInsert={handleImageInsert} />
@@ -379,6 +424,7 @@ const EditorWrapper = ({ viewMode = 'editor', onMarkdownChange, initialContent }
                                 className="markdown-textarea"
                                 value={markdownContent}
                                 onChange={handleMarkdownChange}
+                                onSelect={handleSelect}
                                 onKeyDown={handleKeyDown}
                                 placeholder="Type markdown here…"
                                 spellCheck={spellCheckEnabled}
@@ -403,6 +449,14 @@ const EditorWrapper = ({ viewMode = 'editor', onMarkdownChange, initialContent }
                     )}
                 </div>
             </div>
+            <AIAssistant
+                isOpen={aiOpen}
+                onClose={() => setAiOpen(false)}
+                onInsert={replaceSelection}
+                onReplace={replaceSelection}
+                selectedText={selectedText}
+                fullContent={markdownContent}
+            />
         </div>
     );
 };
